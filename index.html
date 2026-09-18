@@ -1,4 +1,45 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="A guided Brooks Law Group case review preview."><title>Brooks Law Group · Case review</title><link rel="stylesheet" href="style.css"></head><body>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="A guided Brooks Law Group case review preview."><title>Brooks Law Group · Case review</title><link rel="stylesheet" href="style.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1105937789515348');
+fbq('track','PageView');
+
+window.brooksTrackLead = function(leadId) {
+  var key = 'brooks_meta_lead_' + String(leadId || 'sent');
+  try {
+    if (sessionStorage.getItem(key)) return false;
+  } catch (error) {}
+
+  if (typeof window.fbq !== 'function') return false;
+  window.fbq('track','Lead');
+
+  try {
+    sessionStorage.setItem(key,'1');
+  } catch (error) {}
+  return true;
+};
+</script>
+<!-- End Meta Pixel Code -->
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,'clarity','script','yk80llbvdf');
+</script>
+<!-- End Microsoft Clarity -->
+</head><body>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1105937789515348&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
 <div class="preview">Design preview <span>·</span> No enquiry will be sent</div>
 <div class="app"><header><button class="round back" id="undo" aria-label="Undo last answer" disabled=""><svg viewBox="0 0 24 24"><path d="m14 5-7 7 7 7"></path></svg></button><div class="identity"><div class="avatar"><img src="brooks-logo.png" alt="Brooks Law Group logo" width="153" height="122"></div><h1>Brooks Law Group <span>›</span></h1><p>Automated intake assistant</p></div><button class="round" id="about" aria-label="About this chat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6m0-10v1"></path></svg></button></header>
 <nav aria-label="Review progress"><span class="stage active" aria-current="step">1 <b>Your accident</b></span><i></i><span class="stage">2 <b>Review</b></span><i></i><span class="stage">3 <b>Contact</b></span></nav>
@@ -706,6 +747,9 @@
       if (!response.ok || !result.ok) throw new Error(result.error || `Submission failed (${response.status})`);
 
       store(SENT_KEY, fp);
+      if (typeof window.brooksTrackLead === 'function') {
+        window.brooksTrackLead(result.intake_id || fp);
+      }
       button.textContent = 'Request sent';
       button.disabled = true;
       button.setAttribute('aria-disabled', 'true');
@@ -1272,6 +1316,9 @@
       if (!response.ok || !data.ok) throw new Error(data.error || 'Submission failed');
 
       store(SUBMITTED_KEY, String(data.intake_id || 'sent'));
+      if (typeof window.brooksTrackLead === 'function') {
+        window.brooksTrackLead(data.intake_id || 'sent');
+      }
       button.textContent = 'Request sent';
       addInlineStatus(button, 'Your request has been sent to Brooks Law Group. Their team can now review the information you provided.');
     } catch (error) {
