@@ -149,7 +149,12 @@ module.exports = async function handler(req, res) {
 
   const person = splitName(name);
   const answers = parseAnswers(transcript, body);
-  const utm = body.utm && typeof body.utm === 'object' ? body.utm : {};
+  const incomingUtm = body.utm && typeof body.utm === 'object' ? body.utm : {};
+  const attributionKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+  const utm = {};
+  for (const key of attributionKeys) {
+    utm[key] = clean(body[key] != null ? body[key] : incomingUtm[key], 500);
+  }
 
   const payload = {
     event: 'brooks_intake_submission',
@@ -173,6 +178,14 @@ module.exports = async function handler(req, res) {
     preferred_contact: preference,
     preference,
     consent,
+
+    utm_source: utm.utm_source,
+    utm_medium: utm.utm_medium,
+    utm_campaign: utm.utm_campaign,
+    utm_content: utm.utm_content,
+    utm_term: utm.utm_term,
+    fbclid: utm.fbclid,
+    gclid: utm.gclid,
 
     conversation_transcript: transcript,
     utm,

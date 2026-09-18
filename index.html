@@ -38,13 +38,34 @@ window.brooksTrackLead = function(leadId) {
   })(window,document,'clarity','script','yk80llbvdf');
 </script>
 <!-- End Microsoft Clarity -->
+
+<script>
+window.brooksCaptureAttribution = function() {
+  var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+  var params = new URLSearchParams(window.location.search);
+  var attribution = {};
+
+  keys.forEach(function(key) {
+    var value = String(params.get(key) || '').trim().slice(0, 500);
+    attribution[key] = value;
+    var field = document.querySelector('input[type="hidden"][name="' + key + '"]');
+    if (field) field.value = value;
+  });
+
+  return attribution;
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  window.brooksCaptureAttribution();
+});
+</script>
 </head><body>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1105937789515348&amp;ev=PageView&amp;noscript=1" alt=""></noscript>
 <div class="preview">Design preview <span>·</span> No enquiry will be sent</div>
 <div class="app"><header><button class="round back" id="undo" aria-label="Undo last answer" disabled=""><svg viewBox="0 0 24 24"><path d="m14 5-7 7 7 7"></path></svg></button><div class="identity"><div class="avatar"><img src="brooks-logo.png" alt="Brooks Law Group logo" width="153" height="122"></div><h1>Brooks Law Group <span>›</span></h1><p>Automated intake assistant</p></div><button class="round" id="about" aria-label="About this chat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6m0-10v1"></path></svg></button></header>
 <nav aria-label="Review progress"><span class="stage active" aria-current="step">1 <b>Your accident</b></span><i></i><span class="stage">2 <b>Review</b></span><i></i><span class="stage">3 <b>Contact</b></span></nav>
 <main id="thread" tabindex="-1"><div class="thread-inner"><div class="timestamp">Brooks case review<br><span>Free review. No obligation.</span></div><div id="messages" role="log" aria-live="polite" aria-relevant="additions"><section class="intro"><div class="eyebrow">A free first step</div><h2>Let’s take it<br><span>one step at a time.</span></h2><p>Tell us a little about the accident.<br>We’ll help you prepare for a case review.</p></section><div class="row incoming"><div class="bubble">Hi. What kind of accident was it?</div></div></div><div id="controls"><div class="choices" aria-label="Choose an answer"><button class="choice" data-answer="Car accident">Car accident</button><button class="choice" data-answer="Commercial truck">Commercial truck</button><button class="choice" data-answer="Uber or Lyft">Uber or Lyft</button><button class="choice" data-answer="Something else">Something else</button></div></div></div></main>
-<footer><div class="composer-help"><span id="hint">Tap an answer or type below.</span><span id="counter">1 of 7</span></div><form id="composer"><input id="reply" aria-label="Your reply" placeholder="Tell us in your own words…" autocomplete="off" inputmode="text" maxlength="500"><button id="send" type="submit" aria-label="Send answer"><svg viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></svg></button></form><p id="error" role="alert"></p><div class="footnote">Free review. No obligation. <span>·</span> <button id="about-footer">About this chat</button></div></footer></div>
+<footer><div class="composer-help"><span id="hint">Tap an answer or type below.</span><span id="counter">1 of 7</span></div><form id="composer"><input type="hidden" name="utm_source" id="utm_source"><input type="hidden" name="utm_medium" id="utm_medium"><input type="hidden" name="utm_campaign" id="utm_campaign"><input type="hidden" name="utm_content" id="utm_content"><input type="hidden" name="utm_term" id="utm_term"><input type="hidden" name="fbclid" id="fbclid"><input id="reply" aria-label="Your reply" placeholder="Tell us in your own words…" autocomplete="off" inputmode="text" maxlength="500"><button id="send" type="submit" aria-label="Send answer"><svg viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></svg></button></form><p id="error" role="alert"></p><div class="footnote">Free review. No obligation. <span>·</span> <button id="about-footer">About this chat</button></div></footer></div>
 <dialog id="info"><button id="close-info" class="close" aria-label="Close">×</button><div class="avatar"><img src="brooks-logo.png" alt="Brooks Law Group logo" width="153" height="122"></div><h2>About this chat</h2><p>This is an automated case review preview for Brooks Law Group. It collects your answers into a summary you can check.</p><p>Use sample contact details. No enquiry, call, or text message is sent. Your answers are held only while this page is open.</p><p>This preview does not provide legal advice or establish an attorney-client relationship.</p><button class="primary" id="dismiss">Back to conversation</button></dialog>
 <script src="app.js"></script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3bf888039fe895f',t:'MTc4OTU1ODE2NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; visibility: hidden;"></iframe>
 <script id="brooks-contact-intercept-final2">
@@ -678,11 +699,9 @@ window.brooksTrackLead = function(leadId) {
   }
 
   function utmData() {
-    const params = new URLSearchParams(location.search);
-    const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
-    const out = {};
-    for (const key of keys) if (params.get(key)) out[key] = params.get(key);
-    return out;
+    return typeof window.brooksCaptureAttribution === 'function'
+      ? window.brooksCaptureAttribution()
+      : {};
   }
 
   async function submitRequest(button) {
@@ -729,6 +748,7 @@ window.brooksTrackLead = function(leadId) {
 
     try {
       const root = conversation();
+      const attribution = utmData();
       const response = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -738,7 +758,8 @@ window.brooksTrackLead = function(leadId) {
           phone: data.phone,
           preference: data.preference,
           transcript: clean(root?.innerText || root?.textContent || ''),
-          utm: utmData(),
+          ...attribution,
+          utm: attribution,
           consent: true
         })
       });
@@ -1243,11 +1264,9 @@ window.brooksTrackLead = function(leadId) {
   }
 
   function utmData() {
-    const params = new URLSearchParams(location.search);
-    const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
-    const out = {};
-    for (const key of keys) if (params.get(key)) out[key] = params.get(key);
-    return out;
+    return typeof window.brooksCaptureAttribution === 'function'
+      ? window.brooksCaptureAttribution()
+      : {};
   }
 
   function consentCheckbox(button) {
@@ -1286,6 +1305,7 @@ window.brooksTrackLead = function(leadId) {
     const preference = load(PREF_KEY) || answerAfterQuestion(PREF_RE);
     const root = conversation();
     const transcript = clean(root?.innerText || root?.textContent || '');
+    const attribution = utmData();
 
     if (!contact.name || !email || !contact.phone) {
       addInlineStatus(button, 'Please check your name, email and phone number before submitting.', true);
@@ -1308,7 +1328,8 @@ window.brooksTrackLead = function(leadId) {
           phone: contact.phone,
           preference,
           transcript,
-          utm: utmData(),
+          ...attribution,
+          utm: attribution,
           consent: true
         })
       });
