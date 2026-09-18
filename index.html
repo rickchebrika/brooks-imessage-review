@@ -1,0 +1,2013 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="A guided Brooks Law Group case review preview."><title>Brooks Law Group · Case review</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="preview">Design preview <span>·</span> No enquiry will be sent</div>
+<div class="app"><header><button class="round back" id="undo" aria-label="Undo last answer" disabled=""><svg viewBox="0 0 24 24"><path d="m14 5-7 7 7 7"></path></svg></button><div class="identity"><div class="avatar"><img src="brooks-logo.png" alt="Brooks Law Group logo" width="153" height="122"></div><h1>Brooks Law Group <span>›</span></h1><p>Automated intake assistant</p></div><button class="round" id="about" aria-label="About this chat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6m0-10v1"></path></svg></button></header>
+<nav aria-label="Review progress"><span class="stage active" aria-current="step">1 <b>Your accident</b></span><i></i><span class="stage">2 <b>Review</b></span><i></i><span class="stage">3 <b>Contact</b></span></nav>
+<main id="thread" tabindex="-1"><div class="thread-inner"><div class="timestamp">Brooks case review<br><span>Free review. No obligation.</span></div><div id="messages" role="log" aria-live="polite" aria-relevant="additions"><section class="intro"><div class="eyebrow">A free first step</div><h2>Let’s take it<br><span>one step at a time.</span></h2><p>Tell us a little about the accident.<br>We’ll help you prepare for a case review.</p></section><div class="row incoming"><div class="bubble">Hi. What kind of accident was it?</div></div></div><div id="controls"><div class="choices" aria-label="Choose an answer"><button class="choice" data-answer="Car accident">Car accident</button><button class="choice" data-answer="Commercial truck">Commercial truck</button><button class="choice" data-answer="Uber or Lyft">Uber or Lyft</button><button class="choice" data-answer="Something else">Something else</button></div></div></div></main>
+<footer><div class="composer-help"><span id="hint">Tap an answer or type below.</span><span id="counter">1 of 7</span></div><form id="composer"><input id="reply" aria-label="Your reply" placeholder="Tell us in your own words…" autocomplete="off" inputmode="text" maxlength="500"><button id="send" type="submit" aria-label="Send answer"><svg viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"></path></svg></button></form><p id="error" role="alert"></p><div class="footnote">Free review. No obligation. <span>·</span> <button id="about-footer">About this chat</button></div></footer></div>
+<dialog id="info"><button id="close-info" class="close" aria-label="Close">×</button><div class="avatar"><img src="brooks-logo.png" alt="Brooks Law Group logo" width="153" height="122"></div><h2>About this chat</h2><p>This is an automated case review preview for Brooks Law Group. It collects your answers into a summary you can check.</p><p>Use sample contact details. No enquiry, call, or text message is sent. Your answers are held only while this page is open.</p><p>This preview does not provide legal advice or establish an attorney-client relationship.</p><button class="primary" id="dismiss">Back to conversation</button></dialog>
+<script src="app.js"></script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3bf888039fe895f',t:'MTc4OTU1ODE2NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; visibility: hidden;"></iframe>
+<script id="brooks-contact-intercept-final2">
+(() => {
+  const VERSION = '2026-09-17-contact-intercept-final2-persistent-email';
+  const OWNER = 'final2';
+  const EMAIL_KEY = 'brooks_live_email';
+  const PENDING = '__brooks_email_pending_final2__';
+  const QUESTION = "What's the best email address for us to reach you?";
+  const PHONE_RE = /what(?:'|\u2019)?s the best phone number to reach you(?: on)?\??/i;
+
+  window.__BROOKS_EMAIL_STEP_OWNER__ = OWNER;
+  window.__BROOKS_CONTACT_INTERCEPT_FINAL2__ = { version: VERSION };
+
+  const state = {
+    active: false,
+    phoneWrapper: null,
+    prompt: null,
+    snapshot: null,
+    hidden: new Set()
+  };
+
+  const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+  const visible = el => !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+  const getEmail = () => { try { return sessionStorage.getItem(EMAIL_KEY) || ''; } catch { return ''; } };
+  const setEmail = value => { try { sessionStorage.setItem(EMAIL_KEY, value); } catch {} };
+  const clearEmail = () => { try { sessionStorage.removeItem(EMAIL_KEY); } catch {} };
+
+  // Fresh funnel load = fresh contact details. Never reuse a previous person's
+  // email, phone or contact preference.
+  try {
+    [
+      'brooks_live_email',
+      'brooks_live_preference',
+      'brooks_contact_v2_phone',
+      'brooks_contact_v3_phone',
+      'brooks_contact_ui_email',
+      '__brooks_email_pending__',
+      '__brooks_email_pending_final2__'
+    ].forEach(key => sessionStorage.removeItem(key));
+  } catch {}
+  const validEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean(value)) && clean(value).length <= 254;
+
+  if (!window.__BROOKS_CONTACT_FRESH_RESET_DONE__) {
+    window.__BROOKS_CONTACT_FRESH_RESET_DONE__ = true;
+    try {
+      [
+        'brooks_live_email',
+        'brooks_live_preference',
+        'brooks_contact_v2_phone',
+        'brooks_contact_v3_phone',
+        'brooks_contact_ui_email',
+        '__brooks_email_pending__',
+        '__brooks_email_pending_final2__'
+      ].forEach(key => sessionStorage.removeItem(key));
+    } catch {}
+    window.__BROOKS_CURRENT_EMAIL__ = '';
+  }
+
+  function conversation() {
+    return document.querySelector('#conversation,[role="log"][aria-label*="conversation" i],[role="log"],.conversation,[class*="conversation"]');
+  }
+
+  function directChild(root, node) {
+    if (!root || !node || node === root) return null;
+    let current = node;
+    while (current.parentElement && current.parentElement !== root) current = current.parentElement;
+    return current.parentElement === root ? current : null;
+  }
+
+  function wrapperFor(root, leaf) {
+    if (!root || !leaf) return null;
+    const semantic = leaf.closest(
+      '.assistant-message,.user-message,' +
+      '[class*="assistant-message"],[class*="user-message"],' +
+      '[data-message-role],[data-role]'
+    );
+    if (semantic && root.contains(semantic)) return semantic;
+    return directChild(root, leaf);
+  }
+
+  function composer() {
+    const direct = document.querySelector('#message-input');
+    if (direct && visible(direct) && !direct.disabled && !direct.readOnly) return direct;
+
+    const nodes = [...document.querySelectorAll(
+      'textarea,input:not([type]),input[type="text"],input[type="email"],input[type="tel"],[contenteditable="true"]'
+    )].filter(el => visible(el) && !el.disabled && !el.readOnly);
+
+    return nodes.length ? nodes[nodes.length - 1] : null;
+  }
+
+  function hintFor(field) {
+    const area = field?.closest('form')?.parentElement || document;
+    return area.querySelector('#input-hint,.composer-caption span,[class*="composer-caption"] span,[class*="hint"]');
+  }
+
+  function phoneTargets() {
+    const root = conversation();
+    if (!root) return [];
+
+    const leaves = [...root.querySelectorAll('p,span,div')].filter(el => {
+      if (el.closest('[data-brooks-contact-intercept-final2="true"]')) return false;
+      if (el.children.length) return false;
+      PHONE_RE.lastIndex = 0;
+      return PHONE_RE.test(clean(el.textContent));
+    });
+
+    return leaves.map(leaf => {
+      const wrapper = wrapperFor(root, leaf);
+      return wrapper ? { root, leaf, wrapper } : null;
+    }).filter(Boolean);
+  }
+
+  function latestPhoneTarget() {
+    const targets = phoneTargets();
+    return targets.length ? targets[targets.length - 1] : null;
+  }
+
+  function sanitize(node) {
+    for (const el of [node, ...node.querySelectorAll('*')]) {
+      el.removeAttribute?.('id');
+      el.removeAttribute?.('hidden');
+      el.removeAttribute?.('aria-hidden');
+      el.removeAttribute?.('data-message-id');
+      el.removeAttribute?.('data-index');
+      el.removeAttribute?.('data-key');
+      if (el.style) {
+        el.style.removeProperty('display');
+        el.style.removeProperty('visibility');
+        el.style.removeProperty('opacity');
+      }
+    }
+    return node;
+  }
+
+  function textLeaf(node) {
+    return node?.querySelector?.('.bubble p,.bubble span,[class*="bubble"] p,[class*="bubble"] span') ||
+      [...(node?.querySelectorAll?.('p,span,div') || [])].find(el => !el.children.length && clean(el.textContent)) ||
+      node || null;
+  }
+
+  function cloneSingleMessage(root, sourceLeaf, role, value) {
+    const sourceWrapper = wrapperFor(root, sourceLeaf);
+    if (!sourceWrapper) return null;
+
+    const sourceBubble = sourceLeaf.closest('.bubble,[class*="bubble"]');
+    const sourceBubbles = [...sourceWrapper.querySelectorAll('.bubble,[class*="bubble"]')];
+    const bubbleIndex = sourceBubble ? sourceBubbles.indexOf(sourceBubble) : -1;
+
+    const clone = sanitize(sourceWrapper.cloneNode(true));
+    clone.setAttribute('data-brooks-contact-intercept-final2', 'true');
+    clone.setAttribute('data-brooks-contact-intercept-role', role);
+
+    if (bubbleIndex >= 0) {
+      const cloneBubbles = [...clone.querySelectorAll('.bubble,[class*="bubble"]')];
+      cloneBubbles.forEach((bubble, index) => {
+        if (index !== bubbleIndex) bubble.remove();
+      });
+    }
+
+    const node = textLeaf(clone);
+    if (!node) return null;
+    node.textContent = value;
+    return clone;
+  }
+
+  function latestUserLeaf(root) {
+    const leaves = [...root.querySelectorAll('p,span,div')].filter(el => {
+      if (el.closest('[data-brooks-contact-intercept-final2="true"]')) return false;
+      if (el.children.length) return false;
+      const wrapper = wrapperFor(root, el);
+      if (!wrapper) return false;
+      const cls = String(wrapper.className || '');
+      return /user/i.test(cls) ||
+        wrapper.getAttribute?.('data-message-role') === 'user' ||
+        wrapper.getAttribute?.('data-role') === 'user';
+    });
+    return leaves.length ? leaves[leaves.length - 1] : null;
+  }
+
+  function fallbackPrompt(value) {
+    const wrap = document.createElement('div');
+    wrap.className = 'assistant-message';
+    wrap.setAttribute('data-brooks-contact-intercept-final2', 'true');
+    wrap.setAttribute('data-brooks-contact-intercept-role', 'email-question');
+    wrap.innerHTML = '<div class="bubble"><p></p></div>';
+    wrap.querySelector('p').textContent = value;
+    return wrap;
+  }
+
+  function fallbackAnswer(value) {
+    const wrap = document.createElement('div');
+    wrap.className = 'user-message';
+    wrap.setAttribute('data-brooks-contact-intercept-final2', 'true');
+    wrap.setAttribute('data-brooks-contact-intercept-role', 'email-answer');
+    wrap.innerHTML = '<div class="bubble"><p></p></div>';
+    wrap.querySelector('p').textContent = value;
+    return wrap;
+  }
+
+  function makePrompt(target) {
+    return cloneSingleMessage(target.root, target.leaf, 'email-question', QUESTION) || fallbackPrompt(QUESTION);
+  }
+
+  function makeAnswer(root, email) {
+    const source = latestUserLeaf(root);
+    return (source && cloneSingleMessage(root, source, 'email-answer', email)) || fallbackAnswer(email);
+  }
+
+  function snapshot(field) {
+    const hint = hintFor(field);
+    return {
+      field,
+      placeholder: field.getAttribute('placeholder'),
+      inputmode: field.getAttribute('inputmode'),
+      autocomplete: field.getAttribute('autocomplete'),
+      maxlength: field.getAttribute('maxlength'),
+      type: field.tagName === 'INPUT' ? field.getAttribute('type') : null,
+      hint,
+      hintText: hint ? hint.textContent : ''
+    };
+  }
+
+  function setEmailComposer(field) {
+    if (!field) return;
+    field.value = '';
+    field.setAttribute('placeholder', 'name@example.com');
+    field.setAttribute('inputmode', 'email');
+    field.setAttribute('autocomplete', 'email');
+    field.setAttribute('maxlength', '254');
+    if (field.tagName === 'INPUT') field.setAttribute('type', 'email');
+    field.removeAttribute('aria-invalid');
+    const hint = hintFor(field);
+    if (hint) hint.textContent = 'Enter your email address.';
+  }
+
+  function restoreComposer() {
+    const saved = state.snapshot;
+    const field = saved?.field?.isConnected ? saved.field : composer();
+    if (!saved || !field) return;
+
+    field.value = '';
+    const restore = (name, value) => value === null ? field.removeAttribute(name) : field.setAttribute(name, value);
+    restore('placeholder', saved.placeholder);
+    restore('inputmode', saved.inputmode);
+    restore('autocomplete', saved.autocomplete);
+    restore('maxlength', saved.maxlength);
+    if (field.tagName === 'INPUT') restore('type', saved.type);
+    field.removeAttribute('aria-invalid');
+
+    const hint = saved.hint?.isConnected ? saved.hint : hintFor(field);
+    if (hint) hint.textContent = saved.hintText;
+  }
+
+  function hidePhone(wrapper) {
+    if (!wrapper) return;
+    state.hidden.add(wrapper);
+    wrapper.style.display = 'none';
+    wrapper.setAttribute('aria-hidden', 'true');
+    wrapper.setAttribute('data-brooks-contact-intercept-phone', 'hidden');
+  }
+
+  function showCurrentPhone() {
+    for (const wrapper of [...state.hidden]) {
+      if (!wrapper?.isConnected) continue;
+      wrapper.style.display = 'none';
+      wrapper.setAttribute('aria-hidden', 'true');
+    }
+
+    const wrapper = state.phoneWrapper?.isConnected
+      ? state.phoneWrapper
+      : [...state.hidden].filter(el => el?.isConnected).pop();
+
+    if (!wrapper) return;
+    wrapper.style.removeProperty('display');
+    wrapper.removeAttribute('aria-hidden');
+    wrapper.setAttribute('data-brooks-contact-intercept-phone', 'restored');
+    state.phoneWrapper = wrapper;
+  }
+
+  function ensurePrompt(target) {
+    const root = target?.root || conversation();
+    const wrapper = target?.wrapper || state.phoneWrapper;
+    if (!root || !wrapper?.isConnected) return;
+
+    if (!state.prompt?.isConnected) state.prompt = makePrompt(target || latestPhoneTarget());
+    if (!state.prompt) return;
+
+    if (state.prompt.parentElement !== root || state.prompt.nextSibling !== wrapper) {
+      root.insertBefore(state.prompt, wrapper);
+    }
+  }
+
+  function activate() {
+    if (state.active) return;
+
+    const raw = getEmail();
+    if (validEmail(raw)) return;
+    if (raw) clearEmail();
+
+    const target = latestPhoneTarget();
+    const field = composer();
+    if (!target || !field) return;
+
+    state.active = true;
+    state.phoneWrapper = target.wrapper;
+    state.snapshot = snapshot(field);
+    hidePhone(target.wrapper);
+    state.prompt = makePrompt(target);
+    ensurePrompt(target);
+    setEmailComposer(field);
+    field.focus();
+  }
+
+  function maintain() {
+    if (!state.active) return;
+
+    const target = latestPhoneTarget();
+    if (target?.wrapper && target.wrapper !== state.prompt) {
+      state.phoneWrapper = target.wrapper;
+      hidePhone(target.wrapper);
+      ensurePrompt(target);
+    }
+
+    const field = composer();
+    if (field) {
+      field.setAttribute('placeholder', 'name@example.com');
+      field.setAttribute('inputmode', 'email');
+      field.setAttribute('autocomplete', 'email');
+      field.setAttribute('maxlength', '254');
+      if (field.tagName === 'INPUT') field.setAttribute('type', 'email');
+    }
+  }
+
+  function finish(email) {
+    email = clean(email);
+    if (!state.active || !validEmail(email)) return false;
+
+    const root = conversation();
+    if (!root) return false;
+
+    const wrapper = state.phoneWrapper?.isConnected ? state.phoneWrapper : latestPhoneTarget()?.wrapper;
+    if (!wrapper) return false;
+    setEmail(email);
+    window.__BROOKS_CURRENT_EMAIL__ = email;
+
+    root.querySelectorAll('[data-brooks-contact-intercept-role="email-answer"]').forEach(node => node.remove());
+    const answer = makeAnswer(root, email);
+    root.insertBefore(answer, wrapper);
+
+    showCurrentPhone();
+    restoreComposer();
+    state.active = false;
+    state.snapshot = null;
+
+    const field = composer();
+    if (field) field.focus();
+    return true;
+  }
+
+  document.addEventListener('submit', event => {
+    if (!state.active) return;
+    const field = composer();
+    if (!field) return;
+
+    const form = field.closest('form');
+    if (form && event.target !== form) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+
+    const email = clean(field.value);
+    if (!validEmail(email)) {
+      field.setAttribute('aria-invalid', 'true');
+      const hint = hintFor(field);
+      if (hint) hint.textContent = 'Enter a valid email address.';
+      field.focus();
+      return;
+    }
+
+    if (!finish(email)) {
+      field.setAttribute('aria-invalid', 'true');
+      const hint = hintFor(field);
+      if (hint) hint.textContent = 'Please try your email address again.';
+    }
+  }, true);
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest?.('button,[role="button"]');
+    if (!button) return;
+    if (!/try another conversation|start over/i.test(clean(button.textContent))) return;
+
+    clearEmail();
+    window.__BROOKS_CURRENT_EMAIL__ = '';
+    try {
+      sessionStorage.removeItem('brooks_live_preference');
+      sessionStorage.removeItem('brooks_contact_v2_phone');
+      sessionStorage.removeItem('brooks_contact_v3_phone');
+    } catch {}
+    state.active = false;
+    state.phoneWrapper = null;
+    state.prompt = null;
+    state.snapshot = null;
+    state.hidden.clear();
+  }, true);
+
+  let queued = false;
+  const observer = new MutationObserver(() => {
+    if (queued) return;
+    queued = true;
+    setTimeout(() => {
+      queued = false;
+      if (state.active) maintain();
+      else activate();
+    }, 0);
+  });
+
+  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  setInterval(() => state.active ? maintain() : activate(), 100);
+  activate();
+})();
+
+</script>
+<script id="brooks-submit-gate-final">
+(() => {
+  const VERSION = '2026-09-17-submit-gate-final';
+  const EMAIL_KEY = 'brooks_live_email';
+  const PREF_KEY = 'brooks_live_preference';
+  const PHONE_KEYS = ['brooks_contact_v3_phone', 'brooks_contact_v2_phone'];
+  const SENT_KEY = 'brooks_submit_success_fingerprint_v2';
+
+  window.__BROOKS_SUBMIT_GATE__ = { version: VERSION };
+
+  let inFlight = false;
+
+  const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+  const load = key => { try { return sessionStorage.getItem(key) || ''; } catch { return ''; } };
+  const store = (key, value) => { try { sessionStorage.setItem(key, String(value || '')); } catch {} };
+
+  function conversation() {
+    return document.querySelector('#conversation,[role="log"][aria-label*="conversation" i],[role="log"],.conversation,[class*="conversation"]');
+  }
+
+  function findReviewCard() {
+    const headings = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div,span')]
+      .filter(el => clean(el.textContent) === 'Your contact request');
+
+    for (const heading of headings) {
+      let current = heading;
+      for (let i = 0; i < 12 && current; i++, current = current.parentElement) {
+        if (current.querySelector?.('input[type="checkbox"]')) return current;
+      }
+    }
+
+    return null;
+  }
+
+  function submitButton(card = findReviewCard()) {
+    if (!card) return null;
+    return [...card.querySelectorAll('button,[role="button"]')].find(button =>
+      /^(?:submit|preview) my contact request$/i.test(clean(button.textContent)) ||
+      /^request sent$/i.test(clean(button.textContent)) ||
+      /^sending\.\.\.$/i.test(clean(button.textContent))
+    ) || null;
+  }
+
+  function checkbox(card = findReviewCard()) {
+    return card?.querySelector?.('input[type="checkbox"]') || null;
+  }
+
+  function leafTexts(root) {
+    if (!root) return [];
+    return [...root.querySelectorAll('p,span,div,li')]
+      .filter(el => !el.children.length)
+      .map(el => clean(el.textContent))
+      .filter(Boolean);
+  }
+
+  function extractPhone(text) {
+    const match = clean(text).match(/\+?\d[\d\s().-]{6,}\d/);
+    return match ? clean(match[0]) : '';
+  }
+
+  function answerAfterQuestion(regex) {
+    const root = conversation();
+    if (!root) return '';
+
+    const messages = [...root.querySelectorAll('.assistant-message,.user-message,[data-message-role],[data-role]')];
+
+    for (let i = 0; i < messages.length; i++) {
+      regex.lastIndex = 0;
+      if (!regex.test(clean(messages[i].innerText || messages[i].textContent))) continue;
+
+      for (let j = i + 1; j < Math.min(messages.length, i + 5); j++) {
+        const cls = String(messages[j].className || '');
+        const isUser = /user/i.test(cls) || messages[j].getAttribute('data-message-role') === 'user' || messages[j].getAttribute('data-role') === 'user';
+        if (isUser) return clean(messages[j].innerText || messages[j].textContent);
+      }
+    }
+
+    return '';
+  }
+
+  function contactData() {
+    const card = findReviewCard();
+    const texts = leafTexts(card);
+
+    let email = load(EMAIL_KEY) || clean(window.__BROOKS_CURRENT_EMAIL__ || '');
+    if (!email) email = texts.find(text => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) || '';
+
+    let phone = '';
+    for (const key of PHONE_KEYS) {
+      const value = load(key);
+      if (value && value.replace(/\D/g, '').length >= 7) { phone = value; break; }
+    }
+
+    let name = '';
+    const cardText = clean(card?.innerText || card?.textContent || '');
+    const summaryMatch = cardText.match(/Your contact request\s+(.+?)\s*[\u00b7|]\s*(\+?[\d\s().-]{7,})/i);
+    if (summaryMatch) {
+      name = clean(summaryMatch[1]);
+      if (!phone) phone = clean(summaryMatch[2]);
+    }
+    if (!name) {
+      const combined = texts.find(text => /[\u00b7|]/.test(text) && extractPhone(text));
+      if (combined) {
+        const match = combined.match(/^(.*?)\s*[\u00b7|]\s*(\+?[\d\s().-]{7,})$/);
+        if (match) {
+          name = clean(match[1]);
+          if (!phone) phone = clean(match[2]);
+        }
+      }
+    }
+    if (!name) name = answerAfterQuestion(/what name should our team ask for\??/i);
+
+    if (!phone) {
+      for (const text of texts) {
+        const value = extractPhone(text);
+        if (value) { phone = value; break; }
+      }
+    }
+
+    let preference = load(PREF_KEY);
+    if (!preference) {
+      preference = texts.find(text => /^(?:Email|Phone call|Text message first)$/i.test(text)) || '';
+    }
+
+    return { name: clean(name), email: clean(email).toLowerCase(), phone: clean(phone), preference: clean(preference) };
+  }
+
+  function fingerprint(data) {
+    return [data.name.toLowerCase(), data.email, data.phone.replace(/\D/g, ''), data.preference.toLowerCase()].join('|');
+  }
+
+  function statusNode(button) {
+    let node = document.querySelector('[data-brooks-submit-gate-status="true"]');
+    if (!node) {
+      node = document.createElement('div');
+      node.setAttribute('data-brooks-submit-gate-status', 'true');
+      node.style.marginTop = '12px';
+      node.style.fontSize = '14px';
+      node.style.lineHeight = '1.4';
+      button.insertAdjacentElement('afterend', node);
+    }
+    return node;
+  }
+
+  function setStatus(button, text, error = false) {
+    const node = statusNode(button);
+    node.textContent = text;
+    node.style.color = error ? '#b42318' : 'inherit';
+  }
+
+  function syncButton() {
+    const card = findReviewCard();
+    const button = submitButton(card);
+    const consent = checkbox(card);
+    if (!button || !consent) return;
+
+    const label = clean(button.textContent);
+
+    if (/^preview my contact request$/i.test(label)) button.textContent = 'Submit my contact request';
+
+    if (/^request sent$/i.test(clean(button.textContent)) || inFlight) {
+      button.disabled = true;
+      button.setAttribute('aria-disabled', 'true');
+      return;
+    }
+
+    if (consent.checked) {
+      button.disabled = false;
+      button.removeAttribute('disabled');
+      button.removeAttribute('aria-disabled');
+      button.style.removeProperty('pointer-events');
+      button.style.removeProperty('opacity');
+    } else {
+      button.disabled = true;
+      button.setAttribute('aria-disabled', 'true');
+    }
+  }
+
+  function cleanLiveCopy() {
+    const replacements = [
+      [/Brooks Law Group preview/gi, 'Brooks Law Group'],
+      [/This is a preview/gi, 'About this intake'],
+      [/Your replies stay in this open page\. They aren[^.]*\. Use sample contact details while testing\.?/gi, 'Your submitted details are sent securely to Brooks Law Group for review.'],
+      [/No enquiry will be sent\.?/gi, 'Secure submission'],
+      [/Contact requests aren[^.]*sent\.?/gi, 'Secure submission'],
+      [/Preview only\.?/gi, 'Secure submission.']
+    ];
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.parentElement?.closest('script,style')) continue;
+      let value = node.nodeValue || '';
+      let next = value;
+      for (const [regex, replacement] of replacements) next = next.replace(regex, replacement);
+      if (next !== value) node.nodeValue = next;
+    }
+
+    for (const el of [...document.querySelectorAll('body *')].filter(el => !el.children.length)) {
+      const text = clean(el.textContent);
+      if (/^(?:free case review\s*[\u00b7\u2022.\-]\s*secure submission|design preview|preview)$/i.test(text)) {
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+
+  function utmData() {
+    const params = new URLSearchParams(location.search);
+    const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+    const out = {};
+    for (const key of keys) if (params.get(key)) out[key] = params.get(key);
+    return out;
+  }
+
+  async function submitRequest(button) {
+    if (inFlight) return;
+
+    const card = findReviewCard();
+    const consent = checkbox(card);
+    if (!consent || !consent.checked) {
+      setStatus(button, 'Please confirm the contact permission above before submitting.', true);
+      syncButton();
+      return;
+    }
+
+    const data = contactData();
+    if (!data.name || !data.email || !data.phone || !data.preference) {
+      const missing = [];
+      if (!data.name) missing.push('name');
+      if (!data.email) missing.push('email');
+      if (!data.phone) missing.push('phone number');
+      if (!data.preference) missing.push('contact preference');
+      setStatus(button, 'Please check your ' + missing.join(', ') + ' before submitting.', true);
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      setStatus(button, 'Please check your email address before submitting.', true);
+      return;
+    }
+
+    const fp = fingerprint(data);
+    if (load(SENT_KEY) === fp) {
+      button.textContent = 'Request sent';
+      button.disabled = true;
+      button.setAttribute('aria-disabled', 'true');
+      setStatus(button, 'This contact request has already been sent to Brooks Law Group.');
+      return;
+    }
+
+    inFlight = true;
+    button.disabled = true;
+    button.setAttribute('aria-disabled', 'true');
+    button.textContent = 'Sending...';
+    setStatus(button, 'Sending your request securely to Brooks Law Group...');
+
+    try {
+      const root = conversation();
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          preference: data.preference,
+          transcript: clean(root?.innerText || root?.textContent || ''),
+          utm: utmData(),
+          consent: true
+        })
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) throw new Error(result.error || `Submission failed (${response.status})`);
+
+      store(SENT_KEY, fp);
+      button.textContent = 'Request sent';
+      button.disabled = true;
+      button.setAttribute('aria-disabled', 'true');
+
+      if (result.confirmation_email_sent === false) {
+        setStatus(button, 'Your request was sent to Brooks Law Group, but the confirmation email could not be delivered.');
+      } else {
+        setStatus(button, 'Your request has been sent to Brooks Law Group. ');
+      }
+    } catch (error) {
+      button.textContent = 'Submit my contact request';
+      setStatus(button, `We could not send your request: ${error && error.message ? error.message : 'Submission failed'}. Please try again or call Brooks Law Group at 800-529-3030.`, true);
+    } finally {
+      inFlight = false;
+      syncButton();
+    }
+  }
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest?.('button,[role="button"]');
+    if (!button) return;
+
+    const label = clean(button.textContent);
+
+    if (/^(?:submit|preview) my contact request$/i.test(label)) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      submitRequest(button);
+      return;
+    }
+
+    if (/try another conversation|start over/i.test(label)) {
+      try { sessionStorage.removeItem(SENT_KEY); } catch {}
+    }
+  }, true);
+
+  document.addEventListener('change', event => {
+    if (event.target?.matches?.('input[type="checkbox"]')) setTimeout(syncButton, 0);
+  }, true);
+
+  document.addEventListener('input', event => {
+    if (event.target?.matches?.('input[type="checkbox"]')) setTimeout(syncButton, 0);
+  }, true);
+
+  function refresh() {
+    cleanLiveCopy();
+    syncButton();
+  }
+
+  let scheduled = false;
+  const observer = new MutationObserver(() => {
+    if (scheduled) return;
+    scheduled = true;
+    setTimeout(() => {
+      scheduled = false;
+      refresh();
+    }, 50);
+  });
+
+  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['disabled','checked','aria-disabled'] });
+  setInterval(refresh, 300);
+  refresh();
+})();
+
+</script>
+<script id="brooks-live-production">
+(() => {
+  const VERSION = '2026-09-17-live-growpath';
+  const EMAIL_QUESTION = "What's the best email address for us to reach you?";
+  const PHONE_RE = /what(?:'|\u2019)?s the best phone number to reach you(?: on)?\??/i;
+  const PREF_RE = /how would you prefer to hear from the team\??/i;
+  const NAME_RE = /what name should our team ask for\??/i;
+  const EMAIL_KEY = 'brooks_live_email';
+  const PREF_KEY = 'brooks_live_preference';
+  const SUBMITTED_KEY = 'brooks_live_submission_id';
+
+  let emailActive = false;
+  let phoneMessage = null;
+  let phoneText = null;
+  let originalPhoneText = '';
+  let savedComposer = null;
+  let emailPreferencePending = false;
+  let submitting = false;
+
+  window.__BROOKS_LIVE_PATCH__ = { version: VERSION };
+
+  const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+  const visible = el => !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+  const store = (key, value) => { try { sessionStorage.setItem(key, value); } catch {} };
+  const load = key => { try { return sessionStorage.getItem(key) || ''; } catch { return ''; } };
+
+  function conversation() {
+    return document.querySelector('#conversation,[role="log"][aria-label*="conversation" i],[role="log"],.conversation,[class*="conversation"]');
+  }
+
+  function composer() {
+    const nodes = [...document.querySelectorAll('textarea,input,[contenteditable="true"]')]
+      .filter(el => visible(el) && !el.disabled && !el.readOnly)
+      .filter(el => {
+        if (el.matches('[contenteditable="true"]')) return true;
+        const type = (el.getAttribute('type') || 'text').toLowerCase();
+        return !['hidden','button','submit','checkbox','radio','file','reset'].includes(type);
+      });
+    return nodes.length ? nodes[nodes.length - 1] : null;
+  }
+
+  function hintFor(field) {
+    const area = field?.closest('form')?.parentElement || document;
+    return area.querySelector('#input-hint,.composer-caption span,[class*="composer-caption"] span,[class*="hint"]');
+  }
+
+  function directChild(root, node) {
+    if (!root || !node || node === root) return null;
+    let current = node;
+    while (current.parentElement && current.parentElement !== root) current = current.parentElement;
+    return current.parentElement === root ? current : null;
+  }
+
+  function removeIds(node) {
+    node?.removeAttribute?.('id');
+    node?.querySelectorAll?.('[id]').forEach(el => el.removeAttribute('id'));
+  }
+
+  function messageTextNode(message) {
+    if (!message) return null;
+    const p = message.querySelector('.bubble p,p');
+    if (p) return p;
+    const leaves = [...message.querySelectorAll('span,div')].filter(el => !el.children.length && clean(el.textContent));
+    return leaves.length ? leaves[leaves.length - 1] : null;
+  }
+
+  function setMessageText(message, value) {
+    const node = messageTextNode(message);
+    if (!node) return false;
+    node.textContent = value;
+    return true;
+  }
+
+  function latestUserMessage(root) {
+    const direct = [...root.children].filter(el => {
+      const cls = String(el.className || '');
+      return /user/i.test(cls) || el.getAttribute('data-message-role') === 'user' || el.getAttribute('data-role') === 'user';
+    });
+    if (direct.length) return direct[direct.length - 1];
+    const nested = [...root.querySelectorAll('.user-message,[data-message-role="user"],[data-role="user"]')];
+    return nested.length ? nested[nested.length - 1] : null;
+  }
+
+  function findPhoneTarget() {
+    const root = conversation();
+    if (!root) return null;
+
+    const leaves = [...root.querySelectorAll('p,span,div')]
+      .filter(el => visible(el) && !el.children.length)
+      .filter(el => {
+        PHONE_RE.lastIndex = 0;
+        return PHONE_RE.test(clean(el.textContent));
+      });
+
+    if (!leaves.length) return null;
+
+    // Always use the newest visible phone prompt.
+    const leaf = leaves[leaves.length - 1];
+
+    let message = leaf.closest(
+      '.assistant-message,[class*="assistant-message"],[data-message-role="assistant"],[data-role="assistant"]'
+    );
+
+    if (!message || !root.contains(message)) {
+      message = directChild(root, leaf);
+    }
+
+    // finishEmail() inserts rows at conversation-root level.
+    if (message && message.parentElement !== root) {
+      message = directChild(root, message) || message;
+    }
+
+    if (!message || message === root) return null;
+
+    return { root, message, text: leaf };
+  }
+  function snapshotComposer(field) {
+    const hint = hintFor(field);
+    return {
+      field,
+      placeholder: field.getAttribute('placeholder'),
+      inputmode: field.getAttribute('inputmode'),
+      autocomplete: field.getAttribute('autocomplete'),
+      maxlength: field.getAttribute('maxlength'),
+      type: field.tagName === 'INPUT' ? field.getAttribute('type') : null,
+      hint,
+      hintText: hint ? hint.textContent : ''
+    };
+  }
+
+  function restoreComposer() {
+    const saved = savedComposer;
+    const field = saved?.field?.isConnected ? saved.field : composer();
+    if (!saved || !field) return;
+    field.value = '';
+    const restore = (name, value) => value === null ? field.removeAttribute(name) : field.setAttribute(name, value);
+    restore('placeholder', saved.placeholder);
+    restore('inputmode', saved.inputmode);
+    restore('autocomplete', saved.autocomplete);
+    restore('maxlength', saved.maxlength);
+    if (field.tagName === 'INPUT') restore('type', saved.type);
+    field.removeAttribute('aria-invalid');
+    if (saved.hint?.isConnected) saved.hint.textContent = saved.hintText;
+  }
+
+  function activateEmailStep() {
+    if (window.__BROOKS_EMAIL_STEP_OWNER__ === 'final2') return;
+    if (emailActive) return;
+
+    const found = findPhoneTarget();
+    const field = composer();
+    if (!found || !field) return;
+
+    const root = found.root;
+    const storedEmail = load(EMAIL_KEY);
+
+    // The email is complete only if THIS conversation visibly contains the
+    // injected email answer. A value left in sessionStorage by an older run
+    // must never skip the Email question.
+    const currentEmailAnswer = root.querySelector(
+      '[data-brooks-live-email-answer="true"],[data-brooks-email-answer="true"]'
+    );
+
+    if (
+      storedEmail &&
+      currentEmailAnswer &&
+      currentEmailAnswer.isConnected &&
+      clean(currentEmailAnswer.textContent).toLowerCase().includes(storedEmail.toLowerCase())
+    ) {
+      return;
+    }
+
+    // We are at a fresh native Phone step. Remove stale contact state first.
+    if (storedEmail && !currentEmailAnswer) {
+      try {
+        sessionStorage.removeItem(EMAIL_KEY);
+        sessionStorage.removeItem(PREF_KEY);
+        sessionStorage.removeItem(SUBMITTED_KEY);
+      } catch {}
+    }
+
+    phoneMessage = found.message;
+    phoneText = found.text;
+    originalPhoneText = phoneText.textContent;
+    savedComposer = snapshotComposer(field);
+    emailActive = true;
+
+    phoneText.textContent = EMAIL_QUESTION;
+
+    field.value = '';
+    field.setAttribute('placeholder', 'name@example.com');
+    field.setAttribute('inputmode', 'email');
+    field.setAttribute('autocomplete', 'email');
+    field.setAttribute('maxlength', '254');
+
+    if (field.tagName === 'INPUT') {
+      field.setAttribute('type', 'email');
+    }
+
+    field.removeAttribute('aria-invalid');
+
+    const hint = hintFor(field);
+    if (hint) hint.textContent = 'Enter your email address.';
+
+    field.focus();
+  }
+  function addEmailToReview() {
+    const email = load(EMAIL_KEY);
+    if (!email || document.querySelector('[data-brooks-live-email-review="true"]')) return;
+    const headings = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div')];
+    const heading = headings.find(el => clean(el.textContent) === 'Your contact request');
+    if (!heading) return;
+    let card = heading;
+    for (let i = 0; i < 8 && card; i++, card = card.parentElement) {
+      const text = clean(card.textContent);
+      if (!/contact request/i.test(text)) continue;
+      const leaves = [...card.querySelectorAll('p,div,span')].filter(el => !el.children.length && clean(el.textContent));
+      const phoneLine = leaves.find(el => clean(el.textContent).replace(/\D/g, '').length >= 7);
+      if (!phoneLine) continue;
+      const emailLine = phoneLine.cloneNode(true);
+      removeIds(emailLine);
+      emailLine.setAttribute('data-brooks-live-email-review', 'true');
+      emailLine.textContent = email;
+      phoneLine.insertAdjacentElement('afterend', emailLine);
+      return;
+    }
+  }
+
+  function cloneSingleMessageRow(sourceMessage, sourceLeaf, roleClass, text, marker) {
+    if (!sourceMessage) {
+      const row = document.createElement('div');
+      row.className = roleClass;
+      row.setAttribute(marker, 'true');
+      row.innerHTML = '<div class="bubble"><p></p></div>';
+      row.querySelector('p').textContent = text;
+      return row;
+    }
+
+    const clone = sourceMessage.cloneNode(true);
+    removeIds(clone);
+    clone.setAttribute(marker, 'true');
+
+    const sourceBubbles = [...sourceMessage.querySelectorAll('.bubble,[class~="bubble"]')];
+    const sourceBubble = sourceLeaf?.closest?.('.bubble,[class~="bubble"]') || null;
+    const sourceIndex = sourceBubble ? sourceBubbles.indexOf(sourceBubble) : -1;
+
+    if (sourceIndex >= 0) {
+      const cloneBubbles = [...clone.querySelectorAll('.bubble,[class~="bubble"]')];
+      cloneBubbles.forEach((bubble, index) => {
+        if (index !== sourceIndex) bubble.remove();
+      });
+    }
+
+    if (!setMessageText(clone, text)) {
+      clone.innerHTML = '<div class="bubble"><p></p></div>';
+      clone.querySelector('p').textContent = text;
+    }
+
+    return clone;
+  }
+
+  function finishEmail(email) {
+    const root = conversation();
+    if (!root || !phoneMessage || !phoneText || !phoneMessage.isConnected) return;
+
+    const cleanEmail = clean(email).toLowerCase();
+
+    // Prevent duplicate rows if the submit event fires twice.
+    root.querySelectorAll(
+      '[data-brooks-live-email-question="true"],[data-brooks-live-email-answer="true"]'
+    ).forEach(el => el.remove());
+
+    const emailPrompt = cloneSingleMessageRow(
+      phoneMessage,
+      phoneText,
+      'assistant-message',
+      EMAIL_QUESTION,
+      'data-brooks-live-email-question'
+    );
+
+    const userTemplate = latestUserMessage(root);
+    let userLeaf = null;
+    if (userTemplate) {
+      const userLeaves = [...userTemplate.querySelectorAll('p,span,div')]
+        .filter(el => !el.children.length && clean(el.textContent));
+      userLeaf = userLeaves[userLeaves.length - 1] || null;
+    }
+
+    const emailAnswer = cloneSingleMessageRow(
+      userTemplate,
+      userLeaf,
+      'user-message',
+      cleanEmail,
+      'data-brooks-live-email-answer'
+    );
+
+    // Restore native Phone question before continuing native flow.
+    phoneText.textContent = originalPhoneText;
+
+    // Put Email Q/A immediately before the native Phone question.
+    root.insertBefore(emailPrompt, phoneMessage);
+    root.insertBefore(emailAnswer, phoneMessage);
+
+    store(EMAIL_KEY, cleanEmail);
+    restoreComposer();
+
+    emailActive = false;
+    savedComposer = null;
+
+    setTimeout(addEmailToReview, 50);
+    setTimeout(addEmailToReview, 250);
+  }
+  function preferenceButtons() {
+    const all = [...document.querySelectorAll('button,[role="button"]')].filter(visible);
+    const phone = all.find(el => /^phone call$/i.test(clean(el.textContent)));
+    const text = all.find(el => /^text message first$/i.test(clean(el.textContent)));
+    return { phone, text };
+  }
+
+  function addEmailPreference() {
+    if (!PREF_RE.test(clean(document.body.innerText))) return;
+    const { phone, text } = preferenceButtons();
+    if (!phone || !text) return;
+    const parent = text.parentElement;
+    if (!parent || parent.querySelector('[data-brooks-live-email-pref="true"]')) return;
+
+    const emailButton = text.cloneNode(true);
+    removeIds(emailButton);
+    emailButton.setAttribute('data-brooks-live-email-pref', 'true');
+    emailButton.textContent = 'Email';
+    emailButton.disabled = false;
+    emailButton.removeAttribute('aria-disabled');
+    emailButton.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      store(PREF_KEY, 'Email');
+      emailPreferencePending = true;
+      text.click();
+      setTimeout(rewriteEmailPreference, 60);
+      setTimeout(rewriteEmailPreference, 250);
+      setTimeout(rewriteEmailPreference, 700);
+    }, true);
+    parent.appendChild(emailButton);
+  }
+
+  function rewriteEmailPreference() {
+    if (!emailPreferencePending && load(PREF_KEY) !== 'Email') return;
+    const root = conversation();
+    if (root) {
+      const candidates = [...root.querySelectorAll('p,span,div')].filter(el => !el.children.length && /^text message first$/i.test(clean(el.textContent)));
+      const last = candidates[candidates.length - 1];
+      if (last) last.textContent = 'Email';
+    }
+    const heading = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div')].find(el => clean(el.textContent) === 'Your contact request');
+    if (heading) {
+      let card = heading;
+      for (let i = 0; i < 8 && card; i++, card = card.parentElement) {
+        const leaves = [...card.querySelectorAll('p,div,span')].filter(el => !el.children.length);
+        const pref = leaves.find(el => /^text message first$/i.test(clean(el.textContent)));
+        if (pref) pref.textContent = 'Email';
+      }
+      emailPreferencePending = false;
+    }
+  }
+
+  function replaceExactText(fromRegex, replacement) {
+    const nodes = [...document.querySelectorAll('body *')].filter(el => !el.children.length && visible(el));
+    for (const el of nodes) {
+      if (fromRegex.test(clean(el.textContent))) el.textContent = replacement;
+    }
+  }
+
+  function makeLiveCopy() {
+    replaceExactText(/^design preview\s*[\u00b7.-]\s*no enquiry will be sent$/i, 'Free case review - Secure submission');
+    replaceExactText(/^preview only\. this permission is not submitted, and no call or text will be sent\.?$/i, 'By submitting, you give Brooks Law Group permission to contact you using the preference you selected.');
+    replaceExactText(/^review your contact permission above\.?$/i, 'Review your contact details and permission above.');
+    const buttons = [...document.querySelectorAll('button')];
+    for (const button of buttons) {
+      if (/^preview my contact request$/i.test(clean(button.textContent))) button.textContent = 'Submit my contact request';
+    }
+  }
+
+  function isUserMessage(el) {
+    const cls = String(el?.className || '');
+    return /user/i.test(cls) || el?.getAttribute?.('data-message-role') === 'user' || el?.getAttribute?.('data-role') === 'user';
+  }
+
+  function answerAfterQuestion(regex) {
+    const root = conversation();
+    if (!root) return '';
+    const children = [...root.children];
+    for (let i = 0; i < children.length; i++) {
+      if (!regex.test(clean(children[i].textContent))) continue;
+      for (let j = i + 1; j < Math.min(children.length, i + 5); j++) {
+        if (isUserMessage(children[j])) return clean(children[j].textContent);
+      }
+    }
+    return '';
+  }
+
+  function reviewContact() {
+    let name = answerAfterQuestion(NAME_RE);
+    let phone = answerAfterQuestion(PHONE_RE);
+    const headings = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div')];
+    const heading = headings.find(el => clean(el.textContent) === 'Your contact request');
+    if (heading) {
+      let card = heading;
+      for (let i = 0; i < 8 && card; i++, card = card.parentElement) {
+        const leaves = [...card.querySelectorAll('p,div,span')].filter(el => !el.children.length && clean(el.textContent));
+        const contactLine = leaves.find(el => clean(el.textContent).replace(/\D/g, '').length >= 7);
+        if (!contactLine) continue;
+        const text = clean(contactLine.textContent);
+        const match = text.match(/^(.*?)\s*[\u00b7|]\s*(\+?[\d\s().-]{7,})$/);
+        if (match) {
+          if (!name) name = clean(match[1]);
+          if (!phone) phone = clean(match[2]);
+        } else if (!phone) {
+          phone = text;
+        }
+        break;
+      }
+    }
+    return { name, phone };
+  }
+
+  function utmData() {
+    const params = new URLSearchParams(location.search);
+    const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+    const out = {};
+    for (const key of keys) if (params.get(key)) out[key] = params.get(key);
+    return out;
+  }
+
+  function consentCheckbox(button) {
+    let area = button;
+    for (let i = 0; i < 8 && area; i++, area = area.parentElement) {
+      const checkbox = area.querySelector?.('input[type="checkbox"]');
+      if (checkbox) return checkbox;
+    }
+    return document.querySelector('input[type="checkbox"]');
+  }
+
+  function addInlineStatus(button, text, error = false) {
+    let node = document.querySelector('[data-brooks-live-status="true"]');
+    if (!node) {
+      node = document.createElement('div');
+      node.setAttribute('data-brooks-live-status', 'true');
+      node.style.marginTop = '12px';
+      node.style.fontSize = '14px';
+      node.style.lineHeight = '1.4';
+      button.insertAdjacentElement('afterend', node);
+    }
+    node.textContent = text;
+    node.style.color = error ? '#b42318' : 'inherit';
+  }
+
+  async function submitLive(button) {
+    if (submitting || load(SUBMITTED_KEY)) return;
+    const checkbox = consentCheckbox(button);
+    if (!checkbox || !checkbox.checked) {
+      addInlineStatus(button, 'Please confirm the contact permission above before submitting.', true);
+      return;
+    }
+
+    const contact = reviewContact();
+    const email = load(EMAIL_KEY);
+    const preference = load(PREF_KEY) || answerAfterQuestion(PREF_RE);
+    const root = conversation();
+    const transcript = clean(root?.innerText || root?.textContent || '');
+
+    if (!contact.name || !email || !contact.phone) {
+      addInlineStatus(button, 'Please check your name, email and phone number before submitting.', true);
+      return;
+    }
+
+    submitting = true;
+    const oldText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Sending...';
+    addInlineStatus(button, 'Sending your request securely to Brooks Law Group...');
+
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: contact.name,
+          email,
+          phone: contact.phone,
+          preference,
+          transcript,
+          utm: utmData(),
+          consent: true
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.error || 'Submission failed');
+
+      store(SUBMITTED_KEY, String(data.intake_id || 'sent'));
+      button.textContent = 'Request sent';
+      addInlineStatus(button, 'Your request has been sent to Brooks Law Group. Their team can now review the information you provided.');
+    } catch (error) {
+      button.disabled = false;
+      button.textContent = oldText || 'Submit my contact request';
+      addInlineStatus(button, "We couldn't send your request. Please try again or call Brooks Law Group at 800-529-3030.", true);
+    } finally {
+      submitting = false;
+    }
+  }
+
+  document.addEventListener('submit', event => {
+    if (!emailActive) return;
+    const field = composer();
+    if (!field) return;
+    const form = field.closest('form');
+    if (form && event.target !== form) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    const email = clean(field.value);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+      field.setAttribute('aria-invalid', 'true');
+      const hint = hintFor(field);
+      if (hint) hint.textContent = 'Enter a valid email address.';
+      field.focus();
+      return;
+    }
+    finishEmail(email);
+  }, true);
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest?.('button,[role="button"]');
+    if (!button) return;
+    const label = clean(button.textContent);
+
+    if (!emailPreferencePending && /^phone call$/i.test(label)) store(PREF_KEY, 'Phone call');
+    if (!emailPreferencePending && /^text message first$/i.test(label)) store(PREF_KEY, 'Text message first');
+
+    if (/^(submit|preview) my contact request$/i.test(label)) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      submitLive(button);
+      return;
+    }
+
+    if (/try another conversation|start over/i.test(label)) {
+      try {
+        sessionStorage.removeItem(EMAIL_KEY);
+        sessionStorage.removeItem(PREF_KEY);
+        sessionStorage.removeItem(SUBMITTED_KEY);
+      } catch {}
+      emailActive = false;
+      phoneMessage = null;
+      phoneText = null;
+      originalPhoneText = '';
+      savedComposer = null;
+      emailPreferencePending = false;
+      submitting = false;
+    }
+  }, true);
+
+  function refresh() {
+    makeLiveCopy();
+    /* Email step handled by brooks-email-gate-v4 */
+    addEmailPreference();
+    addEmailToReview();
+    rewriteEmailPreference();
+  }
+
+  const observer = new MutationObserver(() => queueMicrotask(refresh));
+  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  setInterval(refresh, 250);
+  refresh();
+})();
+
+</script>
+<script id="brooks-final-live-cleanup">
+(() => {
+  const VERSION = '2026-09-17-final-live-cleanup-v2';
+  window.__BROOKS_FINAL_LIVE_CLEANUP__ = { version: VERSION };
+
+  const SKIP = new Set(['SCRIPT','STYLE','NOSCRIPT']);
+  const rules = [
+    [/design preview/gi, 'Free case review'],
+    [/\bpreview\s*[·.\-]\s*contact requests (?:aren['’]?t|are not) sent\.?/gi, 'Free case review · Secure submission'],
+    [/contact requests (?:aren['’]?t|are not) sent\.?/gi, 'Secure submission'],
+    [/no enquiry will be sent\.?/gi, 'Secure submission'],
+    [/no inquiry will be sent\.?/gi, 'Secure submission'],
+    [/no enquiry was sent(?: to Brooks Law Group)?\.?/gi, 'Your request is ready to submit.'],
+    [/no inquiry was sent(?: to Brooks Law Group)?\.?/gi, 'Your request is ready to submit.'],
+    [/nothing has been sent\.?/gi, 'Your request is ready to submit.'],
+    [/preview complete\.?/gi, 'Review complete.'],
+    [/preview only\.?/gi, 'Before submitting,'],
+    [/preview my contact request/gi, 'Submit my contact request'],
+    [/use sample details while testing\.?/gi, 'Enter your details below.'],
+    [/this permission is not submitted,? and no call or text will be sent\.?/gi,
+      'you give Brooks Law Group permission to contact you using the preference you selected.']
+  ];
+
+  function replaceString(value) {
+    let out = String(value || '');
+    for (const [re, replacement] of rules) out = out.replace(re, replacement);
+    return out;
+  }
+
+  function patchTextNodes(root = document.body) {
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const parent = node.parentElement;
+      if (!parent || SKIP.has(parent.tagName)) continue;
+      const before = node.nodeValue || '';
+      const after = replaceString(before);
+      if (after !== before) node.nodeValue = after;
+    }
+  }
+
+  function patchControls() {
+    for (const el of document.querySelectorAll('button,[role="button"],input[type="submit"],input[type="button"]')) {
+      if (el.tagName === 'INPUT') {
+        const before = el.value || '';
+        const after = replaceString(before);
+        if (after !== before) el.value = after;
+      } else {
+        const before = el.textContent || '';
+        const after = replaceString(before);
+        if (after !== before) el.textContent = after;
+      }
+    }
+  }
+
+  function patchAttributes() {
+    for (const el of document.querySelectorAll('[aria-label],[title],[placeholder]')) {
+      for (const attr of ['aria-label','title','placeholder']) {
+        if (!el.hasAttribute(attr)) continue;
+        const before = el.getAttribute(attr) || '';
+        const after = replaceString(before);
+        if (after !== before) el.setAttribute(attr, after);
+      }
+    }
+  }
+
+  function clean() {
+    patchTextNodes();
+    patchControls();
+    patchAttributes();
+  }
+
+  const observer = new MutationObserver(() => queueMicrotask(clean));
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ['aria-label','title','placeholder','value']
+  });
+
+  setInterval(clean, 150);
+  clean();
+})();
+
+</script>
+<script id="brooks-contact-display-v3">
+(() => {
+  const VERSION = '2026-09-17-contact-display-v3';
+  const EMAIL_Q = "What's the best email address for us to reach you?";
+  const PHONE_Q = "What's the best phone number to reach you on?";
+  const EMAIL_RE = /what(?:'|\u2019)?s the best email address for us to reach you\??/i;
+  const PHONE_RE = /what(?:'|\u2019)?s the best phone number to reach you(?: on)?\??/i;
+  const PREF_RE = /how would you prefer to hear from the team\??/i;
+
+  const EMAIL_KEY = 'brooks_live_email';
+  const PHONE_KEY = 'brooks_contact_v3_phone';
+  const PREF_KEY = 'brooks_live_preference';
+
+  window.__BROOKS_CONTACT_DISPLAY_V3__ = { version: VERSION };
+
+  const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+  const load = key => { try { return sessionStorage.getItem(key) || ''; } catch { return ''; } };
+  const store = (key, value) => { try { sessionStorage.setItem(key, String(value || '')); } catch {} };
+
+  function conversation() {
+    return document.querySelector('#conversation,[role="log"][aria-label*="conversation" i],[role="log"],.conversation,[class*="conversation"]');
+  }
+
+  function leaves(root) {
+    return [...root.querySelectorAll('p,span,div,li')].filter(el => !el.children.length && clean(el.textContent));
+  }
+
+  function findLeaf(root, matcher) {
+    for (const el of leaves(root)) {
+      const text = clean(el.textContent);
+      if (matcher instanceof RegExp) {
+        matcher.lastIndex = 0;
+        if (matcher.test(text)) return el;
+      } else if (text.toLowerCase() === clean(matcher).toLowerCase()) {
+        return el;
+      }
+    }
+    return null;
+  }
+
+  function messageWrapper(root, leaf) {
+    if (!root || !leaf) return null;
+
+    const wrapper = leaf.closest(
+      '.assistant-message,.user-message,' +
+      '[class*="assistant-message"],[class*="user-message"],' +
+      '[data-message-role],[data-role]'
+    );
+
+    if (wrapper && root.contains(wrapper)) return wrapper;
+
+    let current = leaf;
+    while (current.parentElement && current.parentElement !== root) current = current.parentElement;
+    return current.parentElement === root ? current : null;
+  }
+
+  function bubbleForLeaf(wrapper, leaf) {
+    if (!wrapper || !leaf) return null;
+    const bubble = leaf.closest('.bubble,[class~="bubble"]');
+    return bubble && wrapper.contains(bubble) ? bubble : null;
+  }
+
+  function sanitize(node) {
+    for (const el of [node, ...node.querySelectorAll('*')]) {
+      el.removeAttribute?.('id');
+      el.removeAttribute?.('hidden');
+      el.removeAttribute?.('aria-hidden');
+      el.removeAttribute?.('data-message-id');
+      el.removeAttribute?.('data-index');
+      el.removeAttribute?.('data-key');
+      if (el.style) {
+        el.style.removeProperty('display');
+        el.style.removeProperty('visibility');
+        el.style.removeProperty('opacity');
+      }
+    }
+    return node;
+  }
+
+  function firstTextLeaf(root) {
+    return root.querySelector('.bubble p,.bubble span,[class~="bubble"] p,[class~="bubble"] span') ||
+      [...root.querySelectorAll('p,span,div')].find(el => !el.children.length && clean(el.textContent)) ||
+      root;
+  }
+
+  function cloneOneMessage(root, sourceLeaf, role, text) {
+    const sourceWrapper = messageWrapper(root, sourceLeaf);
+    if (!sourceWrapper) return null;
+
+    const sourceBubbles = [...sourceWrapper.querySelectorAll('.bubble,[class~="bubble"]')];
+    const sourceBubble = bubbleForLeaf(sourceWrapper, sourceLeaf);
+    const bubbleIndex = sourceBubble ? sourceBubbles.indexOf(sourceBubble) : -1;
+
+    const clone = sanitize(sourceWrapper.cloneNode(true));
+    clone.setAttribute('data-brooks-contact-v3-row', role);
+
+    if (bubbleIndex >= 0) {
+      const cloneBubbles = [...clone.querySelectorAll('.bubble,[class~="bubble"]')];
+      cloneBubbles.forEach((bubble, index) => {
+        if (index !== bubbleIndex) bubble.remove();
+      });
+
+      const kept = [...clone.querySelectorAll('.bubble,[class~="bubble"]')][0] || clone;
+      const textLeaf = firstTextLeaf(kept);
+      textLeaf.textContent = text;
+    } else {
+      const textLeaf = firstTextLeaf(clone);
+      textLeaf.textContent = text;
+    }
+
+    return clone;
+  }
+
+  function findReviewCard() {
+    const headings = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div,span')]
+      .filter(el => clean(el.textContent) === 'Your contact request');
+
+    for (const heading of headings) {
+      let current = heading;
+      for (let i = 0; i < 12 && current; i++, current = current.parentElement) {
+        if (current.querySelector?.('input[type="checkbox"]')) return current;
+      }
+    }
+    return null;
+  }
+
+  function extractPhone(text) {
+    const match = clean(text).match(/\+?\d[\d\s().-]{6,}\d/);
+    return match ? clean(match[0]) : '';
+  }
+
+  function getPhone() {
+    const stored = load(PHONE_KEY);
+    if (stored && stored.replace(/\D/g, '').length >= 7) return stored;
+
+    const card = findReviewCard();
+    if (card) {
+      const candidates = leaves(card)
+        .map(el => extractPhone(el.textContent))
+        .filter(Boolean)
+        .sort((a, b) => a.length - b.length);
+
+      if (candidates.length) {
+        store(PHONE_KEY, candidates[0]);
+        return candidates[0];
+      }
+    }
+
+    const root = conversation();
+    if (!root) return '';
+
+    const prefLeaf = findLeaf(root, PREF_RE);
+    const candidates = [];
+
+    for (const leaf of leaves(root)) {
+      if (leaf.closest('[data-brooks-contact-v3-history="true"]')) continue;
+      const value = extractPhone(leaf.textContent);
+      if (value) candidates.push(value);
+    }
+
+    if (candidates.length) {
+      const phone = candidates[candidates.length - 1];
+      store(PHONE_KEY, phone);
+      return phone;
+    }
+
+    return '';
+  }
+
+  function hideOriginalMessage(root, leaf, block) {
+    if (!leaf || block.contains(leaf)) return;
+    const wrapper = messageWrapper(root, leaf);
+    if (!wrapper || block.contains(wrapper) || wrapper.hasAttribute('data-brooks-contact-v3-row')) return;
+
+    wrapper.style.display = 'none';
+    wrapper.setAttribute('aria-hidden', 'true');
+  }
+
+  function ensureContactHistory() {
+    const root = conversation();
+    const email = load(EMAIL_KEY);
+    if (!root || !email) return;
+
+    const prefLeaf = findLeaf(root, PREF_RE);
+    if (!prefLeaf) return;
+
+    const prefWrapper = messageWrapper(root, prefLeaf);
+    if (!prefWrapper) return;
+
+    const phone = getPhone();
+    if (!phone) return;
+
+    const phoneDigits = phone.replace(/\D/g, '');
+
+    const emailLeaf = findLeaf(root, email);
+    const phoneLeaf = leaves(root).find(el => {
+      if (el.closest('[data-brooks-contact-v3-history="true"]')) return false;
+      return clean(el.textContent).replace(/\D/g, '') === phoneDigits;
+    }) || null;
+
+    if (!emailLeaf || !phoneLeaf) return;
+
+    const emailQuestionSource = findLeaf(root, EMAIL_RE) || prefLeaf;
+    const phoneQuestionSource = findLeaf(root, PHONE_RE) || prefLeaf;
+
+    let block = root.querySelector('[data-brooks-contact-v3-history="true"]');
+
+    if (!block) {
+      const eq = cloneOneMessage(root, emailQuestionSource, 'email-question', EMAIL_Q);
+      const ea = cloneOneMessage(root, emailLeaf, 'email-answer', email);
+      const pq = cloneOneMessage(root, phoneQuestionSource, 'phone-question', PHONE_Q);
+      const pa = cloneOneMessage(root, phoneLeaf, 'phone-answer', phone);
+
+      if (!eq || !ea || !pq || !pa) return;
+
+      block = document.createElement('div');
+      block.setAttribute('data-brooks-contact-v3-history', 'true');
+      block.style.display = 'contents';
+
+      block.append(eq, ea, pq, pa);
+    } else {
+      const values = {
+        'email-question': EMAIL_Q,
+        'email-answer': email,
+        'phone-question': PHONE_Q,
+        'phone-answer': phone
+      };
+
+      for (const [role, value] of Object.entries(values)) {
+        const row = block.querySelector(`[data-brooks-contact-v3-row="${role}"]`);
+        if (!row) continue;
+        const textLeaf = firstTextLeaf(row);
+        if (clean(textLeaf.textContent) !== value) textLeaf.textContent = value;
+      }
+    }
+
+    if (block.parentElement !== root || block.nextSibling !== prefWrapper) {
+      root.insertBefore(block, prefWrapper);
+    }
+
+    for (const leaf of leaves(root)) {
+      if (block.contains(leaf)) continue;
+
+      const text = clean(leaf.textContent);
+      const digits = text.replace(/\D/g, '');
+
+      EMAIL_RE.lastIndex = 0;
+      PHONE_RE.lastIndex = 0;
+
+      if (
+        EMAIL_RE.test(text) ||
+        PHONE_RE.test(text) ||
+        text.toLowerCase() === email.toLowerCase() ||
+        (phoneDigits && digits === phoneDigits)
+      ) {
+        hideOriginalMessage(root, leaf, block);
+      }
+    }
+  }
+
+  function replaceExactText(root, from, to) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+
+    while ((node = walker.nextNode())) {
+      if (clean(node.nodeValue).toLowerCase() === clean(from).toLowerCase()) {
+        node.nodeValue = to;
+      }
+    }
+  }
+
+  function ensureReviewCard() {
+    const card = findReviewCard();
+    if (!card) return;
+
+    const email = load(EMAIL_KEY);
+    const pref = load(PREF_KEY).toLowerCase();
+
+    if (pref === 'email') {
+      replaceExactText(card, 'Text message first', 'Email');
+      replaceExactText(card, 'Phone call', 'Email');
+    }
+
+    if (!email) return;
+
+    const existing = leaves(card).find(el => clean(el.textContent).toLowerCase() === email.toLowerCase());
+    if (existing) {
+      existing.setAttribute('data-brooks-contact-v3-review-email', 'true');
+      return;
+    }
+
+    const candidates = [...card.querySelectorAll('p,span,div,li')].filter(el => {
+      if (el.querySelector?.('input')) return false;
+      const text = clean(el.textContent);
+      return text && !/@/.test(text) && text.replace(/\D/g, '').length >= 7 && text.length < 200;
+    }).sort((a, b) => clean(a.textContent).length - clean(b.textContent).length);
+
+    const phoneSummary = candidates[0] || null;
+    if (!phoneSummary) return;
+
+    const emailLine = sanitize(phoneSummary.cloneNode(true));
+    emailLine.setAttribute('data-brooks-contact-v3-review-email', 'true');
+    emailLine.textContent = email;
+    if (emailLine.tagName === 'SPAN') emailLine.style.display = 'block';
+    phoneSummary.insertAdjacentElement('afterend', emailLine);
+  }
+
+  function hideTopStrip() {
+    for (const el of [...document.querySelectorAll('body *')].filter(el => !el.children.length)) {
+      const text = clean(el.textContent);
+      const old =
+        /^free case review\s*[\u00b7\u2022.\-]\s*secure submission$/i.test(text) ||
+        /^design preview(?:\s*[\u00b7\u2022.\-]\s*no enquiry will be sent)?$/i.test(text) ||
+        /^preview(?:\s*[\u00b7\u2022.\-]\s*contact requests (?:aren['\u2019]?t|are not) sent\.?)?$/i.test(text);
+
+      if (old) {
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+
+  document.addEventListener('submit', event => {
+    const form = event.target?.matches?.('form') ? event.target : null;
+    if (!form) return;
+
+    const field = [...form.querySelectorAll('textarea,input')].find(el => {
+      if (el.disabled || el.readOnly) return false;
+      return !['hidden','button','submit','checkbox','radio'].includes((el.type || '').toLowerCase());
+    });
+
+    if (!field) return;
+
+    const value = clean(field.value);
+    if (/@/.test(value)) return;
+
+    const digits = value.replace(/\D/g, '');
+    if (digits.length < 7) return;
+
+    const root = conversation();
+    if (!root) return;
+
+    PHONE_RE.lastIndex = 0;
+    if (PHONE_RE.test(clean(root.innerText || root.textContent))) {
+      store(PHONE_KEY, value);
+    }
+  }, true);
+
+  function refresh() {
+    hideTopStrip();
+    ensureContactHistory();
+    ensureReviewCard();
+  }
+
+  let pending = false;
+  const observer = new MutationObserver(() => {
+    if (pending) return;
+    pending = true;
+
+    setTimeout(() => {
+      pending = false;
+      refresh();
+    }, 50);
+  });
+
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+
+  setInterval(refresh, 500);
+  refresh();
+})();
+
+</script>
+<script id="brooks-review-email-stable-final">
+(() => {
+  const VERSION = '2026-09-17-review-email-stable-persistent';
+  const EMAIL_KEY = 'brooks_live_email';
+  const PENDING_RE = /^__brooks_email_pending/i;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  window.__BROOKS_REVIEW_EMAIL_STABLE__ = { version: VERSION };
+
+  const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+  const validEmail = value => EMAIL_RE.test(clean(value)) && !PENDING_RE.test(clean(value));
+
+  function storedEmail() {
+    try {
+      const value = sessionStorage.getItem(EMAIL_KEY) || '';
+      return validEmail(value) ? clean(value) : '';
+    } catch {
+      return '';
+    }
+  }
+
+  function saveEmail(value) {
+    if (!validEmail(value)) return '';
+    try { sessionStorage.setItem(EMAIL_KEY, clean(value)); } catch {}
+    return clean(value);
+  }
+
+  function conversation() {
+    return document.querySelector(
+      '#conversation,[role="log"][aria-label*="conversation" i],[role="log"],.conversation,[class*="conversation"]'
+    );
+  }
+
+  function leaves(root) {
+    if (!root) return [];
+    return [...root.querySelectorAll('p,span,div,li')].filter(el => !el.children.length && clean(el.textContent));
+  }
+
+  function emailFromConversation() {
+    const root = conversation();
+    if (!root) return '';
+
+    const candidates = [];
+
+    for (const el of leaves(root)) {
+      if (el.closest('[data-brooks-review-email-stable="true"]')) continue;
+
+      const text = clean(el.textContent);
+      if (PENDING_RE.test(text)) continue;
+      if (!validEmail(text)) continue;
+
+      const rect = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      if (rect.width <= 0 || rect.height <= 0 || style.display === 'none' || style.visibility === 'hidden') continue;
+
+      candidates.push(text);
+    }
+
+    return candidates.length ? candidates[candidates.length - 1] : '';
+  }
+
+  function currentEmail() {
+    const memory = clean(window.__BROOKS_CURRENT_EMAIL__ || '');
+    if (validEmail(memory)) return memory;
+
+    const stored = storedEmail();
+    if (stored) {
+      window.__BROOKS_CURRENT_EMAIL__ = stored;
+      return stored;
+    }
+
+    const fromChat = emailFromConversation();
+    if (fromChat) {
+      window.__BROOKS_CURRENT_EMAIL__ = fromChat;
+      return saveEmail(fromChat);
+    }
+
+    return '';
+  }
+
+  function reviewCard() {
+    const headings = [...document.querySelectorAll('h1,h2,h3,h4,strong,p,div,span')]
+      .filter(el => clean(el.textContent) === 'Your contact request');
+
+    for (const heading of headings) {
+      let node = heading;
+      for (let i = 0; i < 12 && node; i++, node = node.parentElement) {
+        if (node.querySelector?.('input[type="checkbox"]')) return node;
+      }
+    }
+
+    return null;
+  }
+
+  function removePendingArtifacts(root = document) {
+    for (const el of [...root.querySelectorAll('p,span,div,li')]) {
+      if (el.children.length) continue;
+      if (PENDING_RE.test(clean(el.textContent))) el.remove();
+    }
+
+    try {
+      const stored = sessionStorage.getItem(EMAIL_KEY) || '';
+      if (PENDING_RE.test(clean(stored))) sessionStorage.removeItem(EMAIL_KEY);
+    } catch {}
+  }
+
+  function findPreferenceLine(card) {
+    const exact = leaves(card).find(el => /^(Email|Phone call|Text message first)$/i.test(clean(el.textContent)));
+    return exact || null;
+  }
+
+  function ensureReviewEmail() {
+    removePendingArtifacts();
+
+    const card = reviewCard();
+    if (!card) return;
+
+    const email = currentEmail();
+    if (!email) return;
+
+    const exactMatches = leaves(card).filter(el => clean(el.textContent).toLowerCase() === email.toLowerCase());
+
+    if (exactMatches.length) {
+      exactMatches[0].setAttribute('data-brooks-review-email-stable', 'true');
+      for (let i = 1; i < exactMatches.length; i++) exactMatches[i].remove();
+      return;
+    }
+
+    let line = card.querySelector('[data-brooks-review-email-stable="true"]');
+
+    if (!line) {
+      const pref = findPreferenceLine(card);
+
+      if (pref) {
+        line = pref.cloneNode(true);
+        for (const el of [line, ...line.querySelectorAll?.('*') || []]) {
+          el.removeAttribute?.('id');
+          el.removeAttribute?.('hidden');
+          el.removeAttribute?.('aria-hidden');
+        }
+        line.textContent = email;
+        line.setAttribute('data-brooks-review-email-stable', 'true');
+        pref.insertAdjacentElement('afterend', line);
+      } else {
+        line = document.createElement('div');
+        line.setAttribute('data-brooks-review-email-stable', 'true');
+        line.textContent = email;
+        line.style.marginTop = '8px';
+        line.style.color = '#64748b';
+
+        const heading = [...card.querySelectorAll('h1,h2,h3,h4,strong,p,div,span')]
+          .find(el => clean(el.textContent) === 'Your contact request');
+
+        if (heading) heading.insertAdjacentElement('afterend', line);
+        else card.prepend(line);
+      }
+    } else if (clean(line.textContent) !== email) {
+      line.textContent = email;
+    }
+  }
+
+  let queued = false;
+
+  function schedule() {
+    if (queued) return;
+    queued = true;
+
+    requestAnimationFrame(() => {
+      queued = false;
+      ensureReviewEmail();
+    });
+  }
+
+  const observer = new MutationObserver(schedule);
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+
+  document.addEventListener('submit', () => {
+    setTimeout(schedule, 0);
+    setTimeout(schedule, 250);
+    setTimeout(schedule, 700);
+  }, true);
+
+  document.addEventListener('click', () => {
+    setTimeout(schedule, 150);
+    setTimeout(schedule, 500);
+  }, true);
+
+  // IMPORTANT: this layer NEVER writes button.disabled or aria-disabled.
+  // The native/submit-gate logic is the only owner of Submit button state.
+  ensureReviewEmail();
+})();
+</script>
+</body></html>

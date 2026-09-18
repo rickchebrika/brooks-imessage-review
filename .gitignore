@@ -1,0 +1,8 @@
+.env
+.env.*
+.vercel
+node_modules
+.DS_Store
+*.before-*
+*.log
+*backup-*

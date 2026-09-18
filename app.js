@@ -1,0 +1,38 @@
+'use strict';
+const questions=[
+{key:'accident',label:'Accident type',text:'Hi. What kind of accident was it?',options:['Car accident','Commercial truck','Uber or Lyft','Something else'],placeholder:'Tell us in your own words…'},
+{key:'location',label:'Location',text:'Where did the accident happen? A city and state is enough.',options:['Tampa, Florida','Orlando, Florida','Somewhere else','Not sure'],placeholder:'City and state, or ZIP code…'},
+{key:'when',label:'When it happened',text:'Approximately when did it happen?',options:['Within the last 30 days','1 to 6 months ago','More than 6 months ago','Not sure'],placeholder:'For example, “last Tuesday” or “about 3 months ago”…'},
+{key:'injury',label:'Injury',text:'Were you, or the person you’re asking for, injured in the accident?',options:['Yes','No','Not sure yet'],placeholder:'Tell us what you know…'},
+{key:'care',label:'Medical care',text:'Has the injured person received any medical care since the accident?',options:['Yes, received care','Not yet','Not sure'],placeholder:'For example, “I went to urgent care”…'},
+{key:'responsibility',label:'Responsibility',text:'Who do you think may have caused the accident? It’s okay if you’re unsure.',options:['Someone else','I may have contributed','Not sure'],placeholder:'Briefly tell us what happened…'},
+{key:'attorney',label:'Attorney',text:'Is an attorney already handling this accident?',options:['No','Yes','Not sure'],placeholder:'For example, “I don’t have a lawyer”…'},
+{key:'name',text:'What name should our team ask for?',placeholder:'Your first and last name…'},
+{key:'phone',text:'What’s the best phone number to reach you on?',placeholder:'Your phone number…'},
+{key:'preference',text:'How would you prefer to hear from the team?',options:['Phone call','Text message first'],placeholder:'Phone call or text message…'}
+];
+const $=id=>document.getElementById(id);let answers={},messages=[],step=0,phase='questions',editing=null,history=[];
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function snapshot(){history.push(JSON.stringify({answers,messages,step,phase,editing}));}
+function say(text,who='incoming'){messages.push({text,who});}
+function ask(){say(questions[step].text);}
+function start(){answers={};messages=[];step=0;phase='questions';editing=null;history=[];ask();render();}
+function summary(){return '<section class="card"><h2>Your accident details</h2><p>Check what we understood. You can change any answer.</p>'+questions.slice(0,7).map(q=>'<div class="summary-row"><span>'+q.label+'</span><strong>'+escapeHTML(answers[q.key]||'Not provided')+'</strong><button class="edit" data-edit="'+q.key+'" aria-label="Change '+q.label+'">Change</button></div>').join('')+'</section><button class="primary" id="confirm">These details look right</button>';}
+function contactCard(){return '<section class="card"><h2>Your contact request</h2><p>'+escapeHTML(answers.name)+' · '+escapeHTML(answers.phone)+'<br>'+escapeHTML(answers.preference)+'</p><label class="consent"><input type="checkbox" id="consent"><span>I’d like Brooks Law Group to contact me about this enquiry using the contact preference I selected.</span></label><p>Preview only. This permission is not submitted, and no call or text will be sent.</p><button class="primary" id="finish" disabled>Preview my contact request</button></section>';}
+function render(){
+$('messages').innerHTML=(history.length===0?'<section class="intro"><div class="eyebrow">A free first step</div><h2>Let’s take it<br><span>one step at a time.</span></h2><p>Tell us a little about the accident.<br>We’ll help you prepare for a case review.</p></section>':'')+messages.map(m=>'<div class="row '+m.who+'"><div class="bubble">'+escapeHTML(m.text)+'</div></div>').join('');
+const current=questions[step];let controls='';
+if(phase==='review')controls=summary();else if(phase==='consent')controls=contactCard();else if(phase==='complete')controls='<button class="primary" id="restart">Try another conversation</button>';else if(current.options)controls='<div class="choices" aria-label="Choose an answer">'+current.options.map(o=>'<button class="choice" data-answer="'+escapeHTML(o)+'">'+escapeHTML(o)+'</button>').join('')+'</div>';
+$('controls').innerHTML=controls;const stage=phase==='review'||editing!==null?1:step>=7||phase==='complete'||phase==='consent'?2:0;document.querySelectorAll('.stage').forEach((e,i)=>{e.classList.toggle('active',i===stage);e.classList.toggle('done',i<stage);if(i===stage)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current')});
+const enabled=phase==='questions';$('reply').disabled=!enabled;$('send').disabled=!enabled;$('reply').value='';$('reply').placeholder=enabled?current.placeholder:'Your message…';$('reply').inputMode=current.key==='phone'?'tel':'text';$('reply').maxLength=current.key==='phone'?25:500;$('error').textContent='';$('undo').disabled=!history.length||phase==='complete';$('hint').textContent=phase==='complete'?'Preview complete. Nothing has been sent.':phase==='review'?'Check your answers, then continue.':phase==='consent'?'Review your contact permission above.':step>=7?'Use sample details while testing.':'Tap an answer or type below.';$('counter').textContent=stage===0?`${step+1} of 7`:stage===1?'Review your answers':'Contact';
+document.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>answer(b.dataset.answer));document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{snapshot();editing=questions.findIndex(q=>q.key===b.dataset.edit);step=editing;phase='questions';say('Let’s update your '+questions[step].label.toLowerCase()+'.');ask();render()});
+if($('confirm'))$('confirm').onclick=()=>{snapshot();say('These details look right.','outgoing');phase='questions';step=7;ask();render()};
+if($('consent'))$('consent').onchange=e=>$('finish').disabled=!e.target.checked;
+if($('finish'))$('finish').onclick=()=>{if(!$('consent').checked)return;snapshot();phase='complete';say('Preview complete. Your accident summary and contact preference are ready. No enquiry was sent to Brooks Law Group.');render()};
+if($('restart'))$('restart').onclick=start;
+requestAnimationFrame(()=>{$('thread').scrollTop=$('thread').scrollHeight});
+}
+function answer(raw){if(phase!=='questions')return;const value=raw.trim();if(!value){$('error').textContent='Please choose an answer or type a reply.';return}const q=questions[step];if(q.key==='name'&&value.split(/\s+/).length<2){$('error').textContent='Please enter a first and last name. You can use a sample name.';return}if(q.key==='phone'&&!/^(1?\d{10})$/.test(value.replace(/\D/g,''))){$('error').textContent='Please enter a 10-digit US phone number, with an optional +1.';return}if(q.key==='preference'&&!/phone|call|text|sms/i.test(value)){$('error').textContent='Please choose Phone call or Text message first.';return}
+snapshot();answers[q.key]=value;say(value,'outgoing');if(editing!==null){editing=null;phase='review';say('Your summary is updated. Please check your answers.');}else if(step===6){phase='review';say('Thank you. Let’s check the details before we continue.');}else if(step===9){phase='consent';say('Your details are ready to review. Please check the contact permission below.');}else{step++;ask()}render();}
+$('composer').onsubmit=e=>{e.preventDefault();answer($('reply').value)};$('undo').onclick=()=>{if(!history.length)return;const last=JSON.parse(history.pop());({answers,messages,step,phase,editing}=last);render()};
+$('about').onclick=$('about-footer').onclick=()=>$('info').showModal();$('close-info').onclick=$('dismiss').onclick=()=>$('info').close();start();
