@@ -39,6 +39,43 @@ window.brooksTrackLead = function(leadId) {
 </script>
 <!-- End Microsoft Clarity -->
 
+<!-- WhatConverts Tracking -->
+<script>
+var $wc_load = function(a) { return JSON.parse(JSON.stringify(a)); },
+  $wc_leads = $wc_leads || {
+    doc: {
+      url: $wc_load(document.URL),
+      ref: $wc_load(document.referrer),
+      search: $wc_load(location.search),
+      hash: $wc_load(location.hash)
+    }
+  };
+</script>
+<script src="https://s.ksrndkehqnwntyxlhgto.com/175654.js"></script>
+<!-- End WhatConverts Tracking -->
+
+<!-- OpenAI Conversion Tracking -->
+<script>
+!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,'script','https://bzrcdn.openai.com/sdk/oaiq.min.js');
+oaiq('init',{pixelId:'2JE84fhvUQZnCbGDKeCSVE',debug:true});
+
+window.brooksTrackOpenAILead = function(leadId) {
+  var key = 'brooks_openai_lead_' + String(leadId || 'sent');
+  try {
+    if (sessionStorage.getItem(key)) return false;
+  } catch (error) {}
+
+  if (typeof window.oaiq !== 'function') return false;
+  window.oaiq('measure','lead_created',{type:'customer_action'});
+
+  try {
+    sessionStorage.setItem(key,'1');
+  } catch (error) {}
+  return true;
+};
+</script>
+<!-- End OpenAI Conversion Tracking -->
+
 <script>
 window.brooksCaptureAttribution = function() {
   var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
@@ -771,6 +808,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (typeof window.brooksTrackLead === 'function') {
         window.brooksTrackLead(result.intake_id || fp);
       }
+      if (typeof window.brooksTrackOpenAILead === 'function') {
+        window.brooksTrackOpenAILead(result.intake_id || fp);
+      }
       button.textContent = 'Request sent';
       button.disabled = true;
       button.setAttribute('aria-disabled', 'true');
@@ -1339,6 +1379,9 @@ document.addEventListener('DOMContentLoaded', function() {
       store(SUBMITTED_KEY, String(data.intake_id || 'sent'));
       if (typeof window.brooksTrackLead === 'function') {
         window.brooksTrackLead(data.intake_id || 'sent');
+      }
+      if (typeof window.brooksTrackOpenAILead === 'function') {
+        window.brooksTrackOpenAILead(data.intake_id || 'sent');
       }
       button.textContent = 'Request sent';
       addInlineStatus(button, 'Your request has been sent to Brooks Law Group. Their team can now review the information you provided.');
